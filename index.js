@@ -24,15 +24,13 @@ app.use(express.json());
 app.use(cookieParser());
 
 // MongoDB Connection
-const uri = process.env.DB_URI;
-if (!uri) {
-    console.error("ERROR: DB_URI environment variable is missing!");
-}
-
+const uri = "mongodb+srv://bracuniversity2001bd_db_user:tm5vQN2x84iEg3QJ@cluster0.jhv7xqb.mongodb.net/?appName=Cluster0";
 const client = new MongoClient(uri, {
-    tls: true,
-    serverSelectionTimeoutMS: 3000,
-    autoSelectFamily: false,
+    serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+    }
 });
 
 let clientPromise;
