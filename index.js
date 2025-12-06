@@ -14,7 +14,9 @@ app.use(cors({
         'http://localhost:5173', 
         'http://localhost:5174',
         'https://assignment-11-client-side.web.app',
-        'https://assignment-11-client-side.firebaseapp.com'
+        'https://assignment-11-client-side.firebaseapp.com',
+        'https://service-review-system-pr-58ae6.web.app',
+        'https://service-review-system-pr-58ae6.firebaseapp.com'
     ],
     credentials: true
 }));
