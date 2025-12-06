@@ -24,10 +24,14 @@ app.use(express.json());
 app.use(cookieParser());
 
 // MongoDB Connection
-const uri = process.env.DB_URI; // You need to set this in .env
+const uri = process.env.DB_URI;
+if (!uri) {
+    console.error("ERROR: DB_URI environment variable is missing!");
+}
+
 const client = new MongoClient(uri, {
     tls: true,
-    serverSelectionTimeoutMS: 5000,
+    serverSelectionTimeoutMS: 3000,
     autoSelectFamily: false,
 });
 
