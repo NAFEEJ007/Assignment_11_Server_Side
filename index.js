@@ -26,11 +26,9 @@ app.use(cookieParser());
 // MongoDB Connection
 const uri = process.env.DB_URI; // You need to set this in .env
 const client = new MongoClient(uri, {
-    serverApi: {
-        version: ServerApiVersion.v1,
-        strict: true,
-        deprecationErrors: true,
-    }
+    tls: true,
+    serverSelectionTimeoutMS: 5000,
+    autoSelectFamily: false,
 });
 
 let clientPromise;
