@@ -48,14 +48,9 @@ const verifyToken = (req, res, next) => {
     });
 };
 
-async function run() {
-    try {
-        // Connect the client to the server	(optional starting in v4.7)
-        // await client.connect();
-
-        const database = client.db("serviceReviewDB");
-        const servicesCollection = database.collection("services");
-        const reviewsCollection = database.collection("reviews");
+const database = client.db("serviceReviewDB");
+const servicesCollection = database.collection("services");
+const reviewsCollection = database.collection("reviews");
 
         // Auth related API
         app.post('/jwt', async (req, res) => {
@@ -242,12 +237,7 @@ async function run() {
         })
 
 
-    } finally {
-        // Ensures that the client will close when you finish/error
-        // await client.close();
-    }
-}
-run().catch(console.dir);
+
 
 app.get('/', (req, res) => {
     res.send('Service Review Server is running');
