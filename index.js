@@ -30,9 +30,28 @@ const client = new MongoClient(uri, {
         version: ServerApiVersion.v1,
         strict: true,
         deprecationErrors: true,
-    },
-    tls: true,
-    tlsAllowInvalidCertificates: true, 
+    }
+});
+
+let clientPromise;
+if (process.env.NODE_ENV === 'development') {
+    if (!global._mongoClientPromise) {
+        global._mongoClientPromise = client.connect();
+    }
+    clientPromise = global._mongoClientPromise;
+} else {
+    clientPromise = client.connect();
+}
+
+// Ensure DB connection for every request
+app.use(async (req, res, next) => {
+    try {
+        await clientPromise;
+        next();
+    } catch (error) {
+        console.error("MongoDB Connection Error:", error);
+        res.status(500).send({ message: "Failed to connect to Database", error: error.message });
+    }
 });
 
 // Verify Token Middleware
@@ -54,16 +73,7 @@ const database = client.db("serviceReviewDB");
 const servicesCollection = database.collection("services");
 const reviewsCollection = database.collection("reviews");
 
-// Ensure DB connection for every request
-app.use(async (req, res, next) => {
-    try {
-        await client.connect();
-        next();
-    } catch (error) {
-        console.error("MongoDB Connection Error:", error);
-        res.status(500).send({ message: "Failed to connect to Database", error: error.message });
-    }
-});
+
 
         // Auth related API
         app.post('/jwt', async (req, res) => {
