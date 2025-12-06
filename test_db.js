@@ -1,0 +1,23 @@
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri = "mongodb+srv://bracuniversity2001bd_db_user:tm5vQN2x84iEg3QJ@cluster0.jhv7xqb.mongodb.net/?appName=Cluster0";
+
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
+
+async function run() {
+  try {
+    await client.connect();
+    await client.db("admin").command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+  } catch(e) {
+    console.error(e);
+  } finally {
+    await client.close();
+  }
+}
+run();

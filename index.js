@@ -24,7 +24,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 // MongoDB Connection
-const uri = "mongodb+srv://bracuniversity2001bd_db_user:tm5vQN2x84iEg3QJ@cluster0.jhv7xqb.mongodb.net/?appName=Cluster0";
+const uri = process.env.DB_URI;
 const client = new MongoClient(uri, {
     serverApi: {
         version: ServerApiVersion.v1,
