@@ -94,12 +94,17 @@ const reviewsCollection = database.collection("reviews");
             }
 
             const cursor = servicesCollection.find(query);
-            if (limit > 0) {
-                const result = await cursor.limit(limit).toArray();
-                return res.send(result);
+            try {
+                if (limit > 0) {
+                    const result = await cursor.limit(limit).toArray();
+                    return res.send(result);
+                }
+                const result = await cursor.toArray();
+                res.send(result);
+            } catch (error) {
+                console.error("Database Error:", error);
+                res.status(500).send({ message: "Database Error", error: error.message });
             }
-            const result = await cursor.toArray();
-            res.send(result);
         });
 
         // Get single service details
