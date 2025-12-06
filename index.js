@@ -50,10 +50,8 @@ const verifyToken = (req, res, next) => {
 
 async function run() {
     try {
-        // await client.connect(); // Connect to MongoDB (optional in v4.7+ if using auto-connect features, but good practice)
-        // Send a ping to confirm a successful connection
-        // await client.db("admin").command({ ping: 1 });
-        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+        // Connect the client to the server	(optional starting in v4.7)
+        // await client.connect();
 
         const database = client.db("serviceReviewDB");
         const servicesCollection = database.collection("services");
@@ -258,3 +256,5 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
 });
+
+module.exports = app;
